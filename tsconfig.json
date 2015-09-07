@@ -1,0 +1,17 @@
+{
+    "compileOnSave": false,
+    "filesGlob": [
+        "**/*.ts",
+        "!node_modules/**/*.*"
+    ],
+    "version": "1.6.0-beta",
+    "compilerOptions": {
+        "target": "es6",
+        "noImplicitAny": false,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "sourceMap": true
+    },
+    "files": [
+    ]
+}

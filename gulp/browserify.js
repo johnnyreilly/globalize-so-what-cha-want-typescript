@@ -2,6 +2,7 @@
 var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
+var tsify = require('tsify');
 var watchify = require('watchify');
 var babelify = require('babelify');
 var gulpif = require('gulp-if');
@@ -10,7 +11,7 @@ var streamify = require('gulp-streamify');
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 
-var src = './src/demo/main.js';
+var src = ['./src/demo/main.js', './typings/tsd.d.ts'];
 var dest = './dist/scripts';
 var dependencies = [
   'react/addons',
@@ -25,8 +26,9 @@ function bundle(options) {
     transform: [babelify.configure({ sourceMaps: false, stage: 3 })],
     debug: options.isDevelopment,
     cache: {}, packageCache: {}, fullPaths: options.isDevelopment
-  });
-  appBundler.external(dependencies);
+  })
+  .external(dependencies)
+  .plugin('tsify');
 
   var vendorsBundler = browserify({
     debug: options.isDevelopment,
