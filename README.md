@@ -20,7 +20,7 @@ Last time I attempted this (on a similar codebase) the latest version of TS avai
 
 This has been ported across to TypeScript using the mighty fine atom-typescript plugin.  
 
-To attempt to build run either of the following commands:
+Once you have `npm install`'d you can attempt to build using either of the following commands:
 
 ```
 npm run build
