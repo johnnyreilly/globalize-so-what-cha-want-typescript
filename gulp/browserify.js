@@ -11,10 +11,10 @@ var streamify = require('gulp-streamify');
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 
-var src = ['./src/demo/main.ts'];
+var src = ['./src/demo/main.ts', './typings/react/react.d.ts', './typings/flux/flux.d.ts', './typings/node/node.d.ts'];
 var dest = './dist/scripts';
 var dependencies = [
-  'react/addons',
+  'react',
   'flux',
   'events',
   'babel/polyfill'
@@ -22,8 +22,8 @@ var dependencies = [
 
 function bundle(options) {
   var appBundler = browserify({
-    entries: [src],
-//    transform: [babelify.configure({ sourceMaps: false, stage: 3 })],
+    entries: src,
+    transform: [babelify.configure({ sourceMaps: false, stage: 3 })],
     debug: options.isDevelopment,
     cache: {}, packageCache: {}, fullPaths: options.isDevelopment
   })

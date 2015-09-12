@@ -4,7 +4,16 @@ var DEPENDENCY_TYPES = {
   LOCALE_JSON: 'Locale specific JSON (supplied for each locale)'
 };
 
-var moduleDependencies = {
+interface ModuleDependency {
+  dependsUpon: string[];
+  cldrGlobalizeFiles: string[];
+  json: {
+    dependencyType: string;
+    dependency: string;
+  }[]
+}
+
+var moduleDependencies: { [key: string]: ModuleDependency } = {
   'core': {
     dependsUpon: [],
     cldrGlobalizeFiles: ['cldr.js', 'cldr/event.js', 'cldr/supplemental.js', 'globalize.js'],
@@ -66,15 +75,11 @@ var moduleDependencies = {
   }
 };
 
-export function determineRequiredCldrData(globalizeOptions) {
-  return determineRequired(globalizeOptions, _populateDependencyCurrier('json', function(json) { return json.dependency; }));
+interface DependencyPopulator {
+  (module: string, requireds: string[]) : string[]
 }
 
-export function determineRequiredCldrGlobalizeFiles(globalizeOptions) {
-  return determineRequired(globalizeOptions, _populateDependencyCurrier('cldrGlobalizeFiles', function(cldrGlobalizeFile) { return cldrGlobalizeFile; }));
-}
-
-function determineRequired(globalizeOptions, populateDependencies) {
+function determineRequired(globalizeOptions: Options, populateDependencies: DependencyPopulator) {
   var modules = Object.keys(globalizeOptions);
   modules.forEach(function(module) {
     if (!moduleDependencies[module]) {
@@ -82,7 +87,7 @@ function determineRequired(globalizeOptions, populateDependencies) {
     }
   });
 
-  var requireds = [];
+  var requireds: string[] = [];
   modules.forEach(function (module) {
     if (globalizeOptions[module]) {
       populateDependencies(module, requireds);
@@ -92,15 +97,18 @@ function determineRequired(globalizeOptions, populateDependencies) {
   return requireds;
 }
 
-function _populateDependencyCurrier(requiredArray, requiredArrayGetter) {
-  var popDepFn = function(module, requireds) {
+function _populateDependencyCurrier(
+    requiredArray: string,
+    requiredArrayGetter: (prop: any) => string
+  ): DependencyPopulator  {
+  var popDepFn = function(module: string, requireds: string[]) {
     var dependencies = moduleDependencies[module];
 
     dependencies.dependsUpon.forEach(function(requiredModule) {
       popDepFn(requiredModule, requireds);
     });
 
-    dependencies[requiredArray].forEach(function(required) {
+    dependencies[requiredArray].forEach(function(required: any) {
       var newRequired = requiredArrayGetter(required);
       if (requireds.indexOf(newRequired) === -1) {
         requireds.push(newRequired);
@@ -113,7 +121,29 @@ function _populateDependencyCurrier(requiredArray, requiredArrayGetter) {
   return popDepFn;
 }
 
-// module.exports = {
-//   determineRequiredCldrData: determineRequiredCldrData,
-//   determineRequiredCldrGlobalizeFiles: determineRequiredCldrGlobalizeFiles
-// };
+export interface Options {
+  currency: boolean;
+  date: boolean;
+  message: boolean;
+  number: boolean;
+  plural: boolean;
+  relativeTime: boolean;
+}
+
+/**
+ * The string array returned will contain a list of the required cldr json data you need. I don't believe ordering matters for the json but it is listed in the same dependency order as the cldr / globalize files are.
+ *
+ * @param options The globalize modules being used.
+ */
+export function determineRequiredCldrData(globalizeOptions: Options) {
+  return determineRequired(globalizeOptions, _populateDependencyCurrier('json', function(json) { return json.dependency; }));
+}
+
+/**
+ * The string array returned will contain a list of the required cldr / globalize files you need, listed in the order they are required.
+ *
+ * @param options The globalize modules being used.
+ */
+export function determineRequiredCldrGlobalizeFiles(globalizeOptions: Options) {
+  return determineRequired(globalizeOptions, _populateDependencyCurrier('cldrGlobalizeFiles', function(cldrGlobalizeFile) { return cldrGlobalizeFile; }));
+}
