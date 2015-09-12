@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
 
@@ -6,6 +6,11 @@ class FluxStore extends EventEmitter {
   constructor() {
     super();
   }
+
+  dispatchToken: string;
+
+  _cleanState: () => void;
+  _dispatcherHandler: (action: any) => void;
 
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -19,7 +24,5 @@ class FluxStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 }
-
-FluxStore.dispatchToken = null;
 
 export default FluxStore;

@@ -66,11 +66,11 @@ var moduleDependencies = {
   }
 };
 
-function determineRequiredCldrData(globalizeOptions) {
+export function determineRequiredCldrData(globalizeOptions) {
   return determineRequired(globalizeOptions, _populateDependencyCurrier('json', function(json) { return json.dependency; }));
 }
 
-function determineRequiredCldrGlobalizeFiles(globalizeOptions) {
+export function determineRequiredCldrGlobalizeFiles(globalizeOptions) {
   return determineRequired(globalizeOptions, _populateDependencyCurrier('cldrGlobalizeFiles', function(cldrGlobalizeFile) { return cldrGlobalizeFile; }));
 }
 
@@ -113,7 +113,7 @@ function _populateDependencyCurrier(requiredArray, requiredArrayGetter) {
   return popDepFn;
 }
 
-module.exports = {
-  determineRequiredCldrData: determineRequiredCldrData,
-  determineRequiredCldrGlobalizeFiles: determineRequiredCldrGlobalizeFiles
-};
+// module.exports = {
+//   determineRequiredCldrData: determineRequiredCldrData,
+//   determineRequiredCldrGlobalizeFiles: determineRequiredCldrGlobalizeFiles
+// };

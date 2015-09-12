@@ -11,7 +11,7 @@ var streamify = require('gulp-streamify');
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 
-var src = ['./src/demo/main.js', './typings/tsd.d.ts'];
+var src = ['./src/demo/main.ts'];
 var dest = './dist/scripts';
 var dependencies = [
   'react/addons',
@@ -23,7 +23,7 @@ var dependencies = [
 function bundle(options) {
   var appBundler = browserify({
     entries: [src],
-    transform: [babelify.configure({ sourceMaps: false, stage: 3 })],
+//    transform: [babelify.configure({ sourceMaps: false, stage: 3 })],
     debug: options.isDevelopment,
     cache: {}, packageCache: {}, fullPaths: options.isDevelopment
   })

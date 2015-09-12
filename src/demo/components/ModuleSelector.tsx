@@ -1,7 +1,12 @@
-import React from 'react/addons';
+import * as React from 'react';
 import Module from './Module';
 
-class ModuleSelector extends React.Component {
+interface Props {
+  modulesState: any;
+  handleSelectionChange: (moduleName: string) => void;
+}
+
+class ModuleSelector extends React.Component<Props, any> {
   constructor(props) {
     super(props);
   }

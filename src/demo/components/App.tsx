@@ -1,10 +1,28 @@
-import React from 'react/addons';
+import * as React from 'react';
 import ModuleStore from '../stores/ModuleStore';
 import ModuleSelector from './ModuleSelector';
 import * as ModuleActions from '../actions/ModuleActions';
 import { determineRequiredCldrData, determineRequiredCldrGlobalizeFiles } from '../../../index';
 
-class App extends React.Component {
+interface Props {}
+
+interface ModuleSelected {
+  isSelected: boolean;
+  description: string;
+}
+
+interface State {
+  modulesState: {
+    currency     : ModuleSelected;
+    date         : ModuleSelected;
+    message      : ModuleSelected;
+    number       : ModuleSelected;
+    plural       : ModuleSelected;
+    relativeTime : ModuleSelected;
+  }
+}
+
+class App extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this._onChange = this._onChange.bind(this);
