@@ -1,5 +1,10 @@
 write-host "Present working directory: $($pwd)"
 
+if (test-path ./test-results -eq $FALSE) {
+  write-host "Failing build as there are no test results"
+  $host.SetShouldExit(1)
+}
+
 $testsuites = [xml](get-content .\test-results\*.xml)
 $anyFailures = $FALSE
 
