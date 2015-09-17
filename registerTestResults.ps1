@@ -1,6 +1,7 @@
 write-host "Present working directory: $($pwd)"
 
-if (test-path ./test-results -eq $FALSE) {
+$thereAreResults = test-path ./test-results
+if ($thereAreResults -eq $FALSE) {
   write-host "Failing build as there are no test results"
   $host.SetShouldExit(1)
 }
