@@ -1,5 +1,7 @@
 # Globalize So What'cha Want - TypeScript
 
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/johnnyreilly/globalize-so-what-cha-want-typescript?retina=false)](https://ci.appveyor.com/project/JohnReilly/globalize-so-what-cha-want-typescript)
+
 This is an attempted port of [Globalize So What'cha Want](https://github.com/johnnyreilly/globalize-so-what-cha-want) to TypeScript for @mhegazy to illustrate problems experienced in https://github.com/Microsoft/TypeScript/issues/4337#issuecomment-137993365.
 
 Globalize So What'cha Want is made up of 2 things:
