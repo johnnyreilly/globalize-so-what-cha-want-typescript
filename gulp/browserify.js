@@ -28,7 +28,7 @@ function bundle(options) {
     cache: {}, packageCache: {}, fullPaths: options.isDevelopment
   })
   .external(dependencies)
-  .plugin('tsify');
+  .plugin(tsify);
 
   var vendorsBundler = browserify({
     debug: options.isDevelopment,
