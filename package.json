@@ -56,7 +56,7 @@
     "phantomjs": "^1.9.17",
     "react": "^0.13.3",
     "tsify": "^0.11.11",
-    "typescript": "^1.6.0-beta",
+    "typescript": "latest",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.3.1"
   }

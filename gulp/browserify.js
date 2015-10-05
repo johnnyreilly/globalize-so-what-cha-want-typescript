@@ -10,6 +10,7 @@ var uglify = require('gulp-uglify');
 var streamify = require('gulp-streamify');
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
+var ts = require('typescript');
 
 var src = ['./src/demo/main.ts', './typings/react/react.d.ts', './typings/flux/flux.d.ts', './typings/node/node.d.ts'];
 var dest = './dist/scripts';
@@ -20,15 +21,18 @@ var dependencies = [
   'babel/polyfill'
 ];
 
+var tsOptions = require(__dirname + '/../src/demo/tsconfig.json').compilerOptions;
+tsOptions.typescript = ts;
+
 function bundle(options) {
   var appBundler = browserify({
     entries: src,
-    transform: [babelify.configure({ sourceMaps: false, stage: 3 })],
     debug: options.isDevelopment,
     cache: {}, packageCache: {}, fullPaths: options.isDevelopment
   })
   .external(dependencies)
-  .plugin(tsify);
+  .plugin(tsify,tsOptions)
+  .transform(babelify.configure({ sourceMaps: false, stage: 3, extensions:['.js','.jsx','.ts','.tsx'] }));
 
   var vendorsBundler = browserify({
     debug: options.isDevelopment,

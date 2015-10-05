@@ -16,8 +16,10 @@
     },
     "files": [
         "../../typings/flux/flux.d.ts",
+        "../../typings/jasmine/jasmine.d.ts",
         "../../typings/node/node.d.ts",
         "../../typings/react/react.d.ts",
+        "../../typings/tsd.d.ts",
         "actions/ModuleActions.ts",
         "constants/action-types/ModuleActionTypes.ts",
         "dependencies.ts",
