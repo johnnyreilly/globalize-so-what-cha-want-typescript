@@ -2,26 +2,27 @@ import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
 
-class FluxStore extends EventEmitter {
+class FluxStore {
   constructor() {
-    super();
+    this._emitter = new EventEmitter();
   }
 
+  _emitter: EventEmitter;
   dispatchToken: string;
 
   _cleanState: () => void;
   _dispatcherHandler: (action: any) => void;
 
   emitChange() {
-    this.emit(CHANGE_EVENT);
+    this._emitter.emit(CHANGE_EVENT);
   }
 
   addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback);
+    this._emitter.on(CHANGE_EVENT, callback);
   }
 
   removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+    this._emitter.removeListener(CHANGE_EVENT, callback);
   }
 }
 

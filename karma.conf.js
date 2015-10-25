@@ -1,3 +1,4 @@
+/* eslint-disable no-var, strict */
 'use strict';
 
 module.exports = function(config) {
@@ -6,7 +7,10 @@ module.exports = function(config) {
     browsers: [ 'PhantomJS' ],
 
     files: [
-      'test/**/*.tests.ts'//, 'typings/jasmine/jasmine.d.ts'
+      'src/demo/dependencies.ts', // This ensures we have the es6 shims in place from babel
+      './typings/jasmine/jasmine.d.ts', './typings/react/react.d.ts', './typings/flux/flux.d.ts', './typings/node/node.d.ts',
+      'test/**/*.tests.ts',
+      'test/**/*.tests.tsx'
     ],
 
     port: 9876,
@@ -16,17 +20,14 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO, //config.LOG_DEBUG
 
     preprocessors: {
-      'src/lib/**/*.ts': [ 'browserify', 'coverage' ],
-      'test/**/*.tests.ts': [ 'browserify' ]
+      'src/**/*.{js,ts,tsx}': [ 'browserify', 'sourcemap' ],
+      'test/**/*.tests.{ts,tsx}': [ 'browserify', 'sourcemap' ]
     },
 
-    // browserify configuration
     browserify: {
-      debug: true,
       plugin: [ 'tsify' ],
       transform: [
         ['babelify', { sourceMaps: false, stage: 3 }],
-        'browserify-istanbul'
       ]
     },
 
@@ -45,14 +46,6 @@ module.exports = function(config) {
       outputDir: 'test-results', // results will be saved as $outputDir/$browserName.xml
       outputFile: undefined, // if included, results will be saved as $outputDir/$browserName/$outputFile
       suite: ''
-    },
-
-    coverageReporter: {
-      reporters:[
-        //{type: 'html', dir:'coverage/'},  // https://github.com/karma-runner/karma-coverage/issues/123
-        {type: 'text'},
-        {type: 'text-summary'}
-      ],
     }
   });
 };

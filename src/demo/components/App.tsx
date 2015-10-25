@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react/addons';
 import ModuleStore from '../stores/ModuleStore';
 import ModuleSelector from './ModuleSelector';
 import * as ModuleActions from '../actions/ModuleActions';
@@ -6,19 +6,20 @@ import { determineRequiredCldrData, determineRequiredCldrGlobalizeFiles } from '
 
 interface Props {}
 
-interface ModuleSelected {
+interface Module {
   isSelected: boolean;
   description: string;
 }
 
 interface State {
   modulesState: {
-    currency     : ModuleSelected;
-    date         : ModuleSelected;
-    message      : ModuleSelected;
-    number       : ModuleSelected;
-    plural       : ModuleSelected;
-    relativeTime : ModuleSelected;
+    currency     : Module;
+    date         : Module;
+    message      : Module;
+    number       : Module;
+    plural       : Module;
+    relativeTime : Module;
+    unit         : Module;
   }
 }
 
@@ -41,8 +42,8 @@ class App extends React.Component<Props, State> {
   render() {
     const { modulesState } = this.state;
     const optionsSelected = Object.assign({}, ...Object.keys(modulesState).map(mod => ({ [`${mod}`]: modulesState[mod].isSelected })));
-    const requiredCldrJson = determineRequiredCldrData(optionsSelected).map(file => <li key={file}>{file}</li>);
-    const requiredCldrGlobalizeFiles = determineRequiredCldrGlobalizeFiles(optionsSelected).map(file => <li key={file}>{file}</li>);
+    const requiredCldrJson = determineRequiredCldrData(optionsSelected).map(file => <li key={ file }>{ file }</li>);
+    const requiredCldrGlobalizeFiles = determineRequiredCldrGlobalizeFiles(optionsSelected).map(file => <li key={ file }>{ file }</li>);
 
     return (
       <div className="container-fluid">

@@ -2,10 +2,8 @@
     "compileOnSave": false,
     "filesGlob": [
         "../../typings/**/*.*.ts",
-        "**/*.ts",
-        "**/*.tsx"
+        "**/*.{ts,tsx}"
     ],
-    "version": "1.6.0-beta",
     "compilerOptions": {
         "jsx": "preserve",
         "target": "es6",
@@ -21,14 +19,15 @@
         "../../typings/react/react.d.ts",
         "../../typings/tsd.d.ts",
         "actions/ModuleActions.ts",
+        "components/App.tsx",
+        "components/Module.tsx",
+        "components/ModuleSelector.tsx",
         "constants/action-types/ModuleActionTypes.ts",
         "dependencies.ts",
         "dispatcher/AppDispatcher.ts",
-        "main.ts",
+        "main.tsx",
         "stores/FluxStore.ts",
-        "stores/ModuleStore.ts",
-        "components/App.tsx",
-        "components/Module.tsx",
-        "components/ModuleSelector.tsx"
-    ]
+        "stores/ModuleStore.ts"
+    ],
+    "exclude": []
 }

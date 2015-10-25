@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react/addons';
 
 interface Props {
   moduleName: string;
@@ -13,17 +13,18 @@ class Module extends React.Component<Props, any> {
     this._onSelectionChanged = this._onSelectionChanged.bind(this);
   }
 
-  static propTypes = {
-    moduleName: React.PropTypes.string.isRequired,
+  static propTypes: React.ValidationMap<Props> = {
+    description: React.PropTypes.string.isRequired,
+    handleSelectionChange: React.PropTypes.func.isRequired,
     isSelected: React.PropTypes.bool.isRequired,
-    handleSelectionChange: React.PropTypes.func.isRequired
+    moduleName: React.PropTypes.string.isRequired
   }
 
   render() {
     const fontClass = 'glyphicon ' + (this.props.isSelected ? 'glyphicon-ok' : 'glyphicon-remove');
     const panelClass = 'panel ' + (this.props.isSelected ? 'panel-success' : 'panel-danger');
     return (
-      <div className={ panelClass } style={{ cursor: 'pointer' }} onClick={ this._onSelectionChanged }>
+      <div className={ panelClass } style={ { cursor: 'pointer' } } onClick={ this._onSelectionChanged }>
         <div className="panel-heading">
           <h3 className="panel-title">
             { this.props.moduleName + ' ' }

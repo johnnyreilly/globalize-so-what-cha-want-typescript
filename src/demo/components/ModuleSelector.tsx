@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react/addons';
 import Module from './Module';
 
 interface Props {
@@ -11,9 +11,14 @@ class ModuleSelector extends React.Component<Props, any> {
     super(props);
   }
 
+  static propTypes: React.ValidationMap<Props> = {
+    handleSelectionChange: React.PropTypes.func.isRequired,
+    modulesState: React.PropTypes.object.isRequired
+  }
+
   render() {
     const { modulesState, handleSelectionChange } = this.props;
-    const modulesToSelect = Object.keys(modulesState).map(mod => <div className="col-md-4" key={mod}>
+    const modulesToSelect = Object.keys(modulesState).map(mod => <div className="col-md-4" key={ mod }>
         <Module
           moduleName={ mod }
           description={ modulesState[mod].description }
